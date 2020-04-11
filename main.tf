@@ -22,7 +22,7 @@ resource "aws_instance" "my_webserver" {
 
 resource "aws_security_group" "my_webserver" {
   name        = "WebServer Security Group"
-  description = "My Security Group for zabbix monitoring"
+  description = "Security Group for zabbix monitoring"
 
   dynamic "ingress" {
     for_each = ["80", "443"]
