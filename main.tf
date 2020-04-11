@@ -22,7 +22,6 @@ resource "aws_instance" "my_webserver" {
 
 resource "aws_security_group" "my_webserver" {
   name        = "WebServer Security Group"
-  description = "My first Security Group"
 
   dynamic "ingress" {
     for_each = ["80", "443"]
