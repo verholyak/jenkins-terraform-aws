@@ -25,7 +25,7 @@ resource "aws_security_group" "my_webserver" {
   description = "Security Group for zabbix monitoring"
 
   dynamic "ingress" {
-    for_each = ["80", "443"]
+    for_each = ["80", "443", "10050"]
     content {
       from_port   = ingress.value
       to_port     = ingress.value
