@@ -8,6 +8,11 @@ provider "aws" {
   region = "eu-central-1"
 }
 
+#  створить elastic ip, привяже до instance
+resource "aws_eip" "my_static_ip" {
+  instance = aws_instance.my_webserver.id  
+}
+
 resource "aws_instance" "my_webserver" {
   ami           = "ami-0ba441bdd9e494102"
   instance_type = "t2.micro"
@@ -16,9 +21,21 @@ resource "aws_instance" "my_webserver" {
   tags = {
     Name = "WebServer-Terraform"
   }
-
+ 
   vpc_security_group_ids = [aws_security_group.my_webserver.id]
   user_data              = file("user-data.sh")
+  
+# перед тим як вбити сервер, створить новий а потім вбє  
+  lifecycle {
+    create_before_destroy = true
+  }
+  
+# --------------------------------
+#  lifecycle {
+#    prevent_destroy = true  # не дає знищити сервер ! або ->
+#    ignore_changes = ["ami", "key_name" "user_data"]  # ігнорить зміни !
+#  }
+# --------------------------------  
 }
 
 resource "aws_security_group" "my_webserver" {
