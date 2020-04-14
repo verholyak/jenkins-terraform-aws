@@ -7,7 +7,8 @@ echo "<br><font color="blue">Hello World !" >> /var/www/html/index.html
 sudo service httpd start
 chkconfig httpd on
 rpm -Uvh https://repo.zabbix.com/zabbix/4.0/rhel/6/x86_64/zabbix-release-4.0-2.el6.noarch.rpm
-yum -y install zabbix zabbix-agent
+yum -y install zabbix
+yum -y install zabbix-agent
 cd /etc/zabbix/
 sed -i s/Server=127.0.0.1/Server=192.168.1.204/g zabbix_agentd.conf
 sed -i s/ServerActive=127.0.0.1/ServerActive=192.168.1.204/g zabbix_agentd.conf
