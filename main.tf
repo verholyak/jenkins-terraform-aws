@@ -14,23 +14,21 @@ resource "aws_eip" "my_static_ip" {
 }
 
 resource "aws_instance" "my_webserver" {
-  ami               = "ami-0ba441bdd9e494102"
-  instance_type     = "t2.micro"
-  key_name          = "aws-terraform-github"
-  source_dest_check = false
+  ami                    = "ami-0ba441bdd9e494102"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = ["${aws_security_group.my_webserver.name}"]
+  user_data              = file("user-data.sh")
+  key_name               = "aws-terraform-github"
+  source_dest_check      = false
 
   tags = {
     Name = "WebServer-Terraform"
   }
- 
-  vpc_security_group_ids = [aws_security_group.my_webserver.id]
-  user_data              = file("user-data.sh")
   
 # перед тим як вбити сервер, створить новий а потім вбє  
   lifecycle {
     create_before_destroy = true
   }
-  
 # --------------------------------
 #  lifecycle {
 #    prevent_destroy = true  # не дає знищити сервер ! або ->
@@ -44,7 +42,7 @@ resource "aws_security_group" "my_webserver" {
   description = "Security Group for zabbix monitoring"
 
   tags = {
-    Name = "Web Server Security Group Terraform"
+    Name = "Security Group Terraform"
   }
   
   dynamic "ingress" {
