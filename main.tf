@@ -16,7 +16,7 @@ resource "aws_eip" "my_static_ip" {
 resource "aws_instance" "my_webserver" {
   ami                    = "ami-0ba441bdd9e494102"
   instance_type          = "t2.micro"
-  vpc_security_group_ids = ["${aws_security_group.my_webserver.name}"]
+  vpc_security_group_ids = [aws_security_group.my_webserver.id]
   user_data              = file("user-data.sh")
   key_name               = "aws-terraform-github"
   source_dest_check      = false
@@ -39,8 +39,10 @@ resource "aws_instance" "my_webserver" {
 
 resource "aws_security_group" "my_webserver" {
   name        = "WebServer Security Group"
+  vpc_id      =  vpc-444f8d2e
   description = "Security Group for zabbix monitoring"
-
+  ingress_cidr_blocks = ["172.31.0.0/16"] 
+  
   tags = {
     Name = "Security Group Terraform"
   }
