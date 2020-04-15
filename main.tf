@@ -19,7 +19,6 @@ resource "aws_instance" "my_webserver" {
   vpc_security_group_ids = [aws_security_group.my_webserver.id]
   user_data              = file("user-data.sh")
   key_name               = "aws-terraform-github"
-  source_dest_check      = false
 
   tags = {
     Name = "WebServer-Terraform"
@@ -38,7 +37,7 @@ resource "aws_instance" "my_webserver" {
 }
 
 resource "aws_security_group" "my_webserver" {
-  name        = "WebServer Security Group NEW"
+  name        = "WebServer Security Group OLD"
   description = "Security Group for zabbix monitoring"
    
   tags = {
