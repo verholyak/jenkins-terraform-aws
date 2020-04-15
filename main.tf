@@ -42,6 +42,10 @@ resource "aws_security_group" "my_webserver" {
   name        = "WebServer Security Group"
   description = "Security Group for zabbix monitoring"
 
+  tags = {
+    Name = "Web Server Security Group Terraform"
+  }
+  
   dynamic "ingress" {
     for_each = ["80", "443", "10050"]
     content {
@@ -58,9 +62,12 @@ resource "aws_security_group" "my_webserver" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    Name = "Web Server Security Group Terraform"
+  
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -68,12 +75,5 @@ resource "aws_security_group" "my_webserver" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-  
-  rule {
-    from_port   = -1
-    to_port     = -1
-    ip_protocol = "icmp"
-    cidr        = "0.0.0.0/0"
   }
 }
