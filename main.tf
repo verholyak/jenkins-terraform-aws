@@ -14,9 +14,10 @@ resource "aws_eip" "my_static_ip" {
 }
 
 resource "aws_instance" "my_webserver" {
-  ami           = "ami-0ba441bdd9e494102"
-  instance_type = "t2.micro"
-  key_name = "aws-terraform-github"
+  ami               = "ami-0ba441bdd9e494102"
+  instance_type     = "t2.micro"
+  key_name          = "aws-terraform-github"
+  source_dest_check = false
 
   tags = {
     Name = "WebServer-Terraform"
