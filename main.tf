@@ -38,7 +38,7 @@ resource "aws_instance" "my_webserver" {
 }
 
 resource "aws_security_group" "my_webserver" {
-  name        = "WebServer Security Group"
+  name        = "WebServer Security Group NEW"
   description = "Security Group for zabbix monitoring"
    
   tags = {
